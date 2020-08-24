@@ -1,0 +1,44 @@
+{% set name = "github3.py" %}
+{% set version = "1.3.0" %}
+{% set sha256 = "15a115c18f7bfcf934dfef7ab103844eb9f620c586bad65967708926da47cbda" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  noarch: python
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps -vv
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+    - jwcrypto
+    - ndg-httpsclient
+    - pyasn1
+    - pyopenssl
+    - python-dateutil >=2.6.0
+    - requests >=2.18
+    - uritemplate.py >=3.0.0
+
+test:
+  imports:
+    - github3
+    - github3.gists
+    - github3.issues
+    - github3.repos
+    - github3.search
+
+about:
+  home: https://github3py.readthedocs.org
+  license: BSD-3-Clause
+  license_file: LICENSE
+  summary: Python wrapper for the GitHub API (http://developer.github.com/v3)
